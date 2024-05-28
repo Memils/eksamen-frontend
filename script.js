@@ -57,37 +57,39 @@ function setupSearch() {
     });
 }
 
-function loadBookDetails() {
-    const bookDetailsElement = document.getElementById('book-details');
-    const urlParams = new URLSearchParams(window.location.search);
-    const booknumber = urlParams.get('booknumber');
-
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const booknumber = params.get('booknumber');
+    
     if (booknumber) {
         fetch(`http://localhost:3000/Bok/${booknumber}`)
             .then(response => response.json())
             .then(data => {
-                const book = data[0];
-                const imagePath = `http://localhost:3000/${book[5]}`;
-                bookDetailsElement.innerHTML = `
-                    <h3>${book[1]}</h3>
-                    <p>Author: ${book[2]}</p>
-                    <p>ISBN: ${book[3]}</p>
-                    <p>Book Number: ${book[4]}</p>
-                    <img src="${imagePath}" alt="Strekkode for ${book[1]}">
-                `;
-
-                const deleteButton = document.getElementById('delete-book-button');
-                deleteButton.addEventListener('click', () => {
-                    deleteBook(book[4], true);
-                });
-                const backButton = document.getElementById('back-button');
-                backButton.addEventListener('click', () => {
-                    window.location.href = 'index.html';
-                });
-            });
-    } else {
-        bookDetailsElement.innerHTML = '<p>Boka ble ikke funnet.</p>';
+                if (data.success) {
+                    displayBookDetails(data.book);
+                } else {
+                    document.getElementById('book-details').innerText = 'Bok ikke funnet';
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
+
+    const deleteButton = document.getElementById('delete-book');
+    deleteButton.addEventListener('click', function() {
+        deleteBook(booknumber, true);
+    });
+});
+
+function displayBookDetails(book) {
+    const bookDetails = document.getElementById('book-details');
+    const imagePath = `http://localhost:3000/${book.image_path}`;
+    bookDetails.innerHTML = `
+        <h2>${book.title}</h2>
+        <p>Forfatter: ${book.author}</p>
+        <p>ISBN: ${book.isbn}</p>
+        <p>Boknummer: ${book.booknumber}</p>
+        <img src="${imagePath}" alt="Barcode">
+    `;
 }
 
 function setupAddBookForm() {
@@ -145,3 +147,15 @@ function deleteBook(booknumber, redirect = false) {
         alert('En feil oppsto da du prøvde å slette denne boka!');
     });
 }
+function searchByBarcode() {
+    const barcodeInput = document.getElementById('barcode-search').value;
+    if (barcodeInput) {
+        window.location.href = `bok.html?booknumber=${barcodeInput}`;
+    } else {
+        alert('Vennligst skriv inn et boknummer');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+});

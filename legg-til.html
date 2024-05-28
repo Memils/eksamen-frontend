@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add New Book</h2>
+        <form id="add-book-form">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required placeholder="Boktittel..">
+            
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author" required placeholder="Forfatter..">
+            
+            <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" name="isbn" required placeholder="ISBN..">
+            
+            <label for="booknumber">Book Number</label>
+            <input type="number" id="booknumber" name="booknumber" required min="1" max="50" placeholder="Strekkodenummer (max 50)">
+            
+            <button type="submit">Add Book</button>
+        </form>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

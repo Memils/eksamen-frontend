@@ -4,9 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
         setupSearch();
     } else if (window.location.pathname.endsWith('bok.html')) {
         loadBookDetails();
+    } else if (window.location.pathname.endsWith('legg-til.html')) {
+        setupAddBookForm();
     }
 });
-
 
 
 function loadBookList(searchString = '') {
@@ -87,6 +88,41 @@ function loadBookDetails() {
     } else {
         bookDetailsElement.innerHTML = '<p>Boka ble ikke funnet.</p>';
     }
+}
+
+function setupAddBookForm() {
+    const addBookForm = document.getElementById('add-book-form');
+    addBookForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(addBookForm);
+        const bookData = {
+            title: formData.get('title'),
+            author: formData.get('author'),
+            isbn: formData.get('isbn'),
+            booknumber: formData.get('booknumber')
+        };
+
+        fetch('http://localhost:3000/leggtilbok', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bookData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Boka ble lagt til!');
+                window.location.href = 'index.html';
+            } else {
+                alert('Klarte ikke legge til bok: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('En feil oppsto da du prøvde å legge til denne boka!');
+        });
+    });
 }
 
 function deleteBook(booknumber, redirect = false) {

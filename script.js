@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p>Author: ${book[2]}</p>
                         <p>ISBN: ${book[3]}</p>
                         <p>Book Number: ${book[4]}</p>
-                        <img src="${imagePath}" alt="Barcode for ${book[1]}">
+                        <img src="${imagePath}" alt="Strekkkode for ${book[1]}">
                     `;
                 });
         }

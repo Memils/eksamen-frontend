@@ -13,9 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadBookList(searchString = '') {
     const bookListElement = document.getElementById('book-list');
     bookListElement.innerHTML = '';  
-
+    // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+    //let url = http://192.168.1.126:3000/Bok';
+    // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt    
     let url = 'http://localhost:3000/Bok';
     if (searchString) {
+        // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+        //url = http://192.168.1.126:3000/filter/${searchString}';
+        // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt 
         url = `http://localhost:3000/filter/${searchString}`;
     }
 
@@ -62,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const booknumber = params.get('booknumber');
     
     if (booknumber) {
+        // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+        //fetch(`http://192.168.1.126:3000/Bok/${booknumber}`)
+        // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
         fetch(`http://localhost:3000/Bok/${booknumber}`)
             .then(response => response.json())
             .then(data => {
@@ -82,6 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayBookDetails(book) {
     const bookDetails = document.getElementById('book-details');
+    // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+    //const imagePath = `http://192.168.1.126:3000/${book.image_path}`;
+    // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
     const imagePath = `http://localhost:3000/${book.image_path}`;
     bookDetails.innerHTML = `
         <h2>${book.title}</h2>
@@ -104,6 +115,9 @@ function setupAddBookForm() {
             booknumber: formData.get('booknumber')
         };
         const jsonBookData = JSON.stringify(bookData);
+        // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+        //fetch(`http://192.168.1.126:3000/leggtilbok'), {
+        // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
         fetch('http://localhost:3000/leggtilbok', {
             method: 'POST',
             headers: {
@@ -127,6 +141,9 @@ function setupAddBookForm() {
     });
 }
 function deleteBook(booknumber, redirect = false) {
+    // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+    //fetch(`http://192.168.1.126:3000/slett/${booknumber}`)
+    // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
     fetch(`http://localhost:3000/slett/${booknumber}`, {
         method: 'DELETE'
     })

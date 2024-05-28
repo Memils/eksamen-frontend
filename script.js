@@ -89,28 +89,6 @@ function loadBookDetails() {
         bookDetailsElement.innerHTML = '<p>Boka ble ikke funnet.</p>';
     }
 }
-function deleteBook(booknumber, redirect = false) {
-    fetch(`http://localhost:3000/slett/${booknumber}`, {
-        method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Boka har blitt slettet');
-            if (redirect) {
-                window.location.href = 'index.html';
-            } else {
-                location.reload();
-            }
-        } else {
-            alert('Klarte ikke å slette boka: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('En feil oppsto da du prøvde å slette denne boka: ' + error.message);
-    });
-}
 
 function setupAddBookForm() {
     const addBookForm = document.getElementById('add-book-form');
@@ -144,5 +122,26 @@ function setupAddBookForm() {
             console.error('Error:', error);
             alert('En feil oppsto da du prøvde å legge til denne boka!');
         });
+    });
+}
+function deleteBook(booknumber, redirect = false) {
+    fetch(`http://localhost:3000/slett/${booknumber}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Boka har blitt slettet');
+            if (redirect) {
+                window.location.href = 'index.html';
+            } else {
+                location.reload();
+            }
+        } else {
+            alert('Klarte ikke å slette boka');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('En feil oppsto da du prøvde å slette denne boka!');
     });
 }

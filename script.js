@@ -99,16 +99,20 @@ function setupAddBookForm() {
             title: formData.get('title'),
             author: formData.get('author'),
             isbn: formData.get('isbn'),
-            booknumber: formData.get('booknumber'),
-            image_path: formData.get ('image_path')
+            booknumber: formData.get('booknumber')
         };
-
+        const jsonBookData = JSON.stringify({
+            title: bookData.title,
+            author: bookData.author,
+            isbn: bookData.isbn,
+            booknumber: bookData.booknumber
+        });
         fetch('http://localhost:3000/leggtilbok', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(bookData)
+            body: jsonBookData
         })
         .then(response => response.json())
         .then(data => {
@@ -123,27 +127,5 @@ function setupAddBookForm() {
             console.error('Error:', error);
             alert('En feil oppsto da du prøvde å legge til denne boka!');
         });
-    });
-}
-
-function deleteBook(booknumber, redirect = false) {
-    fetch(`http://localhost:3000/slett/${booknumber}`, {
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (response.ok) {
-            alert('Boka har blitt slettet');
-            if (redirect) {
-                window.location.href = 'index.html';
-            } else {
-                location.reload();
-            }
-        } else {
-            alert('Klarte ikke å slette boka');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('En feil oppsto da du prøvde å slette denne boka!');
     });
 }

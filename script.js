@@ -60,9 +60,13 @@ function loadBookDetails() {
                 deleteButton.addEventListener('click', () => {
                     deleteBook(book[4], true);
                 });
+                const backButton = document.getElementById('back-button');
+                backButton.addEventListener('click', () => {
+                    window.location.href = 'index.html';
+                });
             });
     } else {
-        bookDetailsElement.innerHTML = '<p>Book ble ikke funnet.</p>';
+        bookDetailsElement.innerHTML = '<p>Boka ble ikke funnet.</p>';
     }
 }
 

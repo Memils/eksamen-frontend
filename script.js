@@ -21,12 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(response => response.json())
                 .then(data => {
                     const book = data[0];
+                    const imagePath = `http://localhost:3000/${book[5]}`;
                     bookDetailsElement.innerHTML = `
                         <h3>${book[1]}</h3>
                         <p>Author: ${book[2]}</p>
                         <p>ISBN: ${book[3]}</p>
                         <p>Book Number: ${book[4]}</p>
-                        <img src="${book[5]}" alt="Barcode for ${book[1]}">
+                        <img src="${imagePath}" alt="Barcode for ${book[1]}">
                     `;
                 });
         }

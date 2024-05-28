@@ -99,7 +99,8 @@ function setupAddBookForm() {
             title: formData.get('title'),
             author: formData.get('author'),
             isbn: formData.get('isbn'),
-            booknumber: formData.get('booknumber')
+            booknumber: formData.get('booknumber'),
+            image_path: formData.get ('image_path')
         };
 
         fetch('http://localhost:3000/leggtilbok', {

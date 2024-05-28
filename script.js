@@ -1,15 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
     if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
         loadBookList();
+        setupSearch();
     } else if (window.location.pathname.endsWith('bok.html')) {
         loadBookDetails();
     }
 });
 
-function loadBookList() {
-    const bookListElement = document.getElementById('book-list');
 
-    fetch('http://localhost:3000/Bok')
+
+function loadBookList(searchString = '') {
+    const bookListElement = document.getElementById('book-list');
+    bookListElement.innerHTML = '';  
+
+    let url = 'http://localhost:3000/Bok';
+    if (searchString) {
+        url = `http://localhost:3000/filter/${searchString}`;
+    }
+
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             data.forEach(book => {
@@ -35,6 +44,16 @@ function loadBookList() {
                 bookListElement.appendChild(bookItem);
             });
         });
+}
+
+function setupSearch() {
+    const searchBook = document.getElementById('search-book');
+    searchBook.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const searchString = searchBook.value.trim();
+            loadBookList(searchString);
+        }
+    });
 }
 
 function loadBookDetails() {

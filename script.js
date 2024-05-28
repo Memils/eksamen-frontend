@@ -15,11 +15,23 @@ function loadBookList() {
             data.forEach(book => {
                 const bookItem = document.createElement('li');
                 bookItem.classList.add('book');
-                bookItem.textContent = `${book[1]} by ${book[2]}`;
-                bookItem.dataset.booknumber = book[4];
-                bookItem.addEventListener('click', () => {
+                const bookInfo = document.createElement('span');
+                bookInfo.textContent = `${book[1]} by ${book[2]}`;
+                bookInfo.dataset.booknumber = book[4];
+                bookInfo.addEventListener('click', () => {
                     window.location.href = `bok.html?booknumber=${book[4]}`;
                 });
+
+                const deleteButton = document.createElement('span');
+                deleteButton.textContent = ' Slett';
+                deleteButton.classList.add('delete-button');
+                deleteButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    deleteBook(book[4]);
+                });
+
+                bookItem.appendChild(bookInfo);
+                bookItem.appendChild(deleteButton);
                 bookListElement.appendChild(bookItem);
             });
         });
@@ -43,8 +55,35 @@ function loadBookDetails() {
                     <p>Book Number: ${book[4]}</p>
                     <img src="${imagePath}" alt="Strekkode for ${book[1]}">
                 `;
+
+                const deleteButton = document.getElementById('delete-book-button');
+                deleteButton.addEventListener('click', () => {
+                    deleteBook(book[4], true);
+                });
             });
     } else {
-        bookDetailsElement.innerHTML = '<p>Beklager, vi fant ikke boken du leter etter.</p>';
+        bookDetailsElement.innerHTML = '<p>Book ble ikke funnet.</p>';
     }
+}
+
+function deleteBook(booknumber, redirect = false) {
+    fetch(`http://localhost:3000/slett/${booknumber}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Boka har blitt slettet');
+            if (redirect) {
+                window.location.href = 'index.html';
+            } else {
+                location.reload();
+            }
+        } else {
+            alert('Klarte ikke å slette boka');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('En feil oppsto da du prøvde å slette denne boka!');
+    });
 }

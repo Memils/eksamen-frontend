@@ -38,7 +38,7 @@ function loadBookList(searchString = '') {
                 });
 
                 const deleteButton = document.createElement('span');
-                deleteButton.textContent = ' Slett';
+                deleteButton.textContent = 'Slett X';
                 deleteButton.classList.add('delete-button');
                 deleteButton.addEventListener('click', (event) => {
                     event.stopPropagation();

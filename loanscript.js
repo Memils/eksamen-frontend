@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userBarcodeInput = document.getElementById('userBarcode');
     const bookBarcodeInput = document.getElementById('bookBarcode');
     const confirmLoanButton = document.getElementById('confirm-loan');
-    
+
     let currentUser = null;
     let currentBook = null;
 

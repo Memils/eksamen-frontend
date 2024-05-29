@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
 function loadBookList(searchString = '') {
     const bookListElement = document.getElementById('book-list');
     bookListElement.innerHTML = '';  
@@ -177,4 +176,62 @@ function searchByBarcode() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const returnBookButton = document.getElementById('return-book-button');
+    const returnBookSection = document.getElementById('return-book-section');
+    const returnBookBarcodeInput = document.getElementById('returnBookBarcode');
+
+    returnBookButton.addEventListener('click', function() {
+        returnBookSection.style.display = 'block';
+    });
+
+    returnBookBarcodeInput.addEventListener('change', function() {
+        const bookBarcode = returnBookBarcodeInput.value;
+         // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+        //fetch(`http://192.168.1.126:3000/Bok/innlever/${book}`)
+        // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
+        fetch(`http://localhost:3000/Bok/innlever/${bookBarcode}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Boka er innlevert');
+                returnBookSection.style.display = 'none';
+                returnBookBarcodeInput.value = '';
+                loadBooks();  
+            } else {
+                alert('Klarte ikke å innlevere boka: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('En feil oppsto da du prøvde å innlevere denne boka!');
+        });
+    });
+
+    function loadBooks() {
+         // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+         //fetch(`http://192.168.1.126:3000/bok`)
+         // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
+        fetch('http://localhost:3000/bok')
+            .then(response => response.json())
+            .then(data => {
+                const bookList = document.getElementById('book-list');
+                bookList.innerHTML = '';
+                data.books.forEach(book => {
+                    const li = document.createElement('li');
+                    li.textContent = `${book.title} - ${book.author}`;
+                    li.addEventListener('click', () => {
+                        window.location.href = `bok.html?number=${book.booknumber}`;
+                    });
+                    bookList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    loadBooks();
 });

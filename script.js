@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error:', error));
     }
 
-    const deleteButton = document.getElementById('delete-book');
+    const deleteButton = document.getElementById('delete-book-button');
     deleteButton.addEventListener('click', function() {
         deleteBook(booknumber, true);
     });

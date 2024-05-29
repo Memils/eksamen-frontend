@@ -43,3 +43,7 @@ li{
     background-color: rgb(100, 194, 100);
     color: white;
 }
+.loaned{
+    background-color: goldenrod;
+    font-weight: bold;
+}

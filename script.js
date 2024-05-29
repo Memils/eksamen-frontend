@@ -31,6 +31,10 @@ function loadBookList(searchString = '') {
                 bookItem.classList.add('book');
                 const bookInfo = document.createElement('span');
                 bookInfo.textContent = `${book[1]} by ${book[2]}`;
+                if (book[6] != null) {
+                    bookInfo.classList.add('loaned');
+                    bookInfo.textContent += ' (Utlånt)';
+                }
                 bookInfo.dataset.booknumber = book[4];
                 bookInfo.addEventListener('click', () => {
                     window.location.href = `bok.html?booknumber=${book[4]}`;
@@ -99,7 +103,7 @@ function displayBookDetails(book) {
         <p>ISBN: ${book.isbn}</p>
         <p>Boknummer: ${book.booknumber}</p>
         <img src="${imagePath}" alt="Barcode">
-        <p>Lånt av: ${book.usernumber}</p>
+        <p>Lånt av: ${book.loaned_to}</p>
         <p>Låndato: ${book.loan_date}</p>
     `;
 }

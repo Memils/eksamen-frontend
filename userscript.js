@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`http://localhost:3000/Låntakere/${number}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.success) {
                     displayUserDetails(data.bruker);
                 } else {

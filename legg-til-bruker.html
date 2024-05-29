@@ -7,6 +7,24 @@
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
+    <h1 class="header">Biblioteket</h1>
+    <h2 class="miniHeader">Legg Til Bruker</h2>    
+    <div class="form-container">
+        <form id="add-user-form" enctype="multipart/form-data">
+            <label for="fornavn">Fornavn</label>
+            <input type="text" id="fornavn" name="fornavn" required placeholder="Fornavn..">
+            
+            <label for="etternavn">Etternavn</label>
+            <input type="text" id="etternavn" name="etternavn" required placeholder="Etternavn..">
+            
+            <label for="number">Nummer</label>
+            <input type="number" id="number" name="number" required min="1000" max="1020" placeholder="nummer (min 1000)">
+            
+            <button class="add-user-button" type="submit">Legg til</button>
+        </form>
+        <button class="back-button" onclick="window.location.href='brukere.html'">Gå Tilbake</button>
+    </div>
     
+    <script src="userscript.js"></script>
 </body>
 </html>

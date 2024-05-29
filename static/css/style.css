@@ -37,3 +37,9 @@ li{
     background-color: blue;
     color: white;
 }
+.add-book-button{
+    padding: 2px;
+    cursor: pointer;
+    background-color: rgb(100, 194, 100);
+    color: white;
+}

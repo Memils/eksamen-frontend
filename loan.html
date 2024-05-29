@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <body>
-        <h1>Utlån av bøker</h1>
+        <h1 class="header">Biblioteket</h1>
+        <h2 class="miniHeader">Utlån av bøker</h2>
         <div>
             <label for="userBarcode">Skann lånekort:</label>
             <input type="text" id="userBarcode">
@@ -19,7 +21,7 @@
         </div>
         <div id="book-details"></div>
         <button id="confirm-loan" disabled>Bekreft Utlån</button>
-        
+        <button class="back-button" onclick="window.location.href='index.html'">Gå Tilbake</button>
     <script src="loanscript.js"></script>
 </body>
 </html>

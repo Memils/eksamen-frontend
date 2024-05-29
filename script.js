@@ -100,6 +100,8 @@ function displayBookDetails(book) {
         <p>ISBN: ${book.isbn}</p>
         <p>Boknummer: ${book.booknumber}</p>
         <img src="${imagePath}" alt="Barcode">
+        <p>Lånt av: ${book.usernumber}</p>
+        <p>Låndato: ${book.loan_date}</p>
     `;
 }
 

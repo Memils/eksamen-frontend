@@ -77,3 +77,39 @@ function displayUserDetails(user) {
     `;
     
 }
+function setupAddUserForm() {
+    const addUserForm = document.getElementById('add-user-form');
+    addUserForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(addUserForm);
+        const userData = {
+            fornavn: formData.get('fornavn'),
+            etternavn: formData.get('etternavn'),
+            number: formData.get('number')
+        };
+        const jsonUserData = JSON.stringify(userData);
+        // ↓ Bruk denne om du ønsker at APIen skal fungere med ubuntu serveren
+        //fetch(`http://192.168.1.126:3000/leggtilbruker'), {
+        // ↓ Bruk denne om du ønsker at APIen skal fungere lokalt
+        fetch('http://localhost:3000/leggtilbruker', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: jsonUserData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Brukeren ble lagt til!');
+                window.location.href = 'brukere.html';
+            } else {
+                alert('Klarte ikke legge til bruker: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('En feil oppsto da du prøvde å legge til denne brukeren!');
+        });
+    });
+}

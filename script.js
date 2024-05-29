@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadBookList();
         setupSearch();
     } else if (window.location.pathname.endsWith('bok.html')) {
-        loadBookDetails();
+        displayBookDetails();
     } else if (window.location.pathname.endsWith('legg-til.html')) {
         setupAddBookForm();
     }
